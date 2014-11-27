@@ -226,6 +226,17 @@ var Command = function(params,commander,callback) {
 	});
 	this.server.addRoute({
 		method: "GET",
+		path: /^\/files\/(.+)$/,
+		handler: function(request,response,state) {
+			// response.writeHead(200, {"Content-Type": "text/plain"});
+			// var buffer = state.wiki.getTiddlerText("$:/favicon.ico","");
+			// response.end($tw.boot.wikiTiddlersPath+state.urlInfo.path, "utf-8");
+			response.writeHead(200,{});
+			fs.createReadStream($tw.boot.wikiTiddlersPath+state.urlInfo.path).pipe(response)
+		}
+	});
+	this.server.addRoute({
+		method: "GET",
 		path: /^\/recipes\/default\/tiddlers.json$/,
 		handler: function(request,response,state) {
 			response.writeHead(200, {"Content-Type": "application/json"});
