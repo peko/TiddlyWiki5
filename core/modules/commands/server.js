@@ -228,9 +228,6 @@ var Command = function(params,commander,callback) {
 		method: "GET",
 		path: /^\/files\/(.+)$/,
 		handler: function(request,response,state) {
-			// response.writeHead(200, {"Content-Type": "text/plain"});
-			// var buffer = state.wiki.getTiddlerText("$:/favicon.ico","");
-			// response.end($tw.boot.wikiTiddlersPath+state.urlInfo.path, "utf-8");
 			response.writeHead(200,{});
 			fs.createReadStream($tw.boot.wikiTiddlersPath+state.urlInfo.path).pipe(response)
 		}
