@@ -228,8 +228,14 @@ var Command = function(params,commander,callback) {
 		method: "GET",
 		path: /^\/files\/(.+)$/,
 		handler: function(request,response,state) {
-			response.writeHead(200,{});
-			fs.createReadStream($tw.boot.wikiTiddlersPath+state.urlInfo.path).pipe(response)
+			var path = $tw.boot.wikiTiddlersPath+state.urlInfo.path;
+			if(fs.existsSync(path)) {
+				response.writeHead(200,{});
+				fs.createReadStream(path).pipe(response)
+			} else {
+				response.writeHead(404);
+				response.end();
+			}
 		}
 	});
 	this.server.addRoute({
